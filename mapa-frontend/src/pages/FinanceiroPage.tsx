@@ -114,8 +114,8 @@ export function FinanceiroPage() {
       <main className="flex-1 flex flex-col min-w-0 overflow-hidden">
         <header className="h-16 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-8 flex items-center justify-between shrink-0">
           <h1 className="text-xl font-bold">Financeiro</h1>
-          <button className="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-all flex items-center gap-2 shadow-lg shadow-blue-500/20">
-            <span className="material-symbols-outlined">add</span>
+          <button className="px-6 py-2.5 bg-primary hover:bg-primary-dark text-white font-semibold rounded-xl transition-all flex items-center gap-2 shadow-lg shadow-blue-500/20">
+            <span className="material-symbols-rounded">add</span>
             Novo Lançamento
           </button>
         </header>
@@ -128,7 +128,7 @@ export function FinanceiroPage() {
                 <div className="flex items-center justify-between mb-2">
                   <p className="text-sm text-slate-500 dark:text-slate-400 font-medium">Total Receita</p>
                   <div className="w-10 h-10 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
-                    <span className="material-symbols-outlined text-green-600 dark:text-green-400">trending_up</span>
+                    <span className="material-symbols-rounded text-green-600 dark:text-green-400">trending_up</span>
                   </div>
                 </div>
                 <p className="text-2xl font-bold text-green-600 dark:text-green-400">R$ {(totalReceita / 1000).toFixed(1)}k</p>
@@ -139,7 +139,7 @@ export function FinanceiroPage() {
                 <div className="flex items-center justify-between mb-2">
                   <p className="text-sm text-slate-500 dark:text-slate-400 font-medium">Total Despesa</p>
                   <div className="w-10 h-10 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center">
-                    <span className="material-symbols-outlined text-red-600 dark:text-red-400">trending_down</span>
+                    <span className="material-symbols-rounded text-red-600 dark:text-red-400">trending_down</span>
                   </div>
                 </div>
                 <p className="text-2xl font-bold text-red-600 dark:text-red-400">R$ {(totalDespesa / 1000).toFixed(1)}k</p>
@@ -150,7 +150,7 @@ export function FinanceiroPage() {
                 <div className="flex items-center justify-between mb-2">
                   <p className="text-sm text-slate-500 dark:text-slate-400 font-medium">Saldo Líquido</p>
                   <div className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
-                    <span className="material-symbols-outlined text-blue-600 dark:text-blue-400">account_balance</span>
+                    <span className="material-symbols-rounded text-blue-600 dark:text-blue-400">account_balance</span>
                   </div>
                 </div>
                 <p className="text-2xl font-bold text-blue-600 dark:text-blue-400">R$ {(saldo / 1000).toFixed(1)}k</p>
@@ -161,7 +161,7 @@ export function FinanceiroPage() {
                 <div className="flex items-center justify-between mb-2">
                   <p className="text-sm text-slate-500 dark:text-slate-400 font-medium">Margem</p>
                   <div className="w-10 h-10 rounded-full bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center">
-                    <span className="material-symbols-outlined text-purple-600 dark:text-purple-400">percent</span>
+                    <span className="material-symbols-rounded text-purple-600 dark:text-purple-400">percent</span>
                   </div>
                 </div>
                 <p className="text-2xl font-bold text-purple-600 dark:text-purple-400">{((saldo / totalReceita) * 100).toFixed(1)}%</p>
@@ -271,10 +271,10 @@ export function FinanceiroPage() {
                         <td className="px-6 py-4 text-sm text-center">
                           <div className="flex justify-center gap-2">
                             <button className="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-all">
-                              <span className="material-symbols-outlined text-lg">edit</span>
+                              <span className="material-symbols-rounded text-lg">edit</span>
                             </button>
                             <button className="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-all">
-                              <span className="material-symbols-outlined text-lg">delete</span>
+                              <span className="material-symbols-rounded text-lg">delete</span>
                             </button>
                           </div>
                         </td>

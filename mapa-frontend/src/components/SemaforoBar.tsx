@@ -47,7 +47,7 @@ export function SemaforoBar({ setor_nome, score_medio, nivel_risco, total_respos
         <p className="text-[10px] font-bold text-slate-400 uppercase mb-3">Detalhes</p>
         <div className="space-y-3">
           <div className="flex gap-3">
-            <span className={`material-symbols-outlined text-lg ${colorClass.replace('bg-', 'text-')}`}>
+            <span className={`material-symbols-rounded text-lg ${colorClass.replace('bg-', 'text-')}`}>
               group
             </span>
             <div>

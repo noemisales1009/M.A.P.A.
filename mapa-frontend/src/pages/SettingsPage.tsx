@@ -37,7 +37,7 @@ export function SettingsPage() {
               onClick={() => setActiveTab('geral')}
               className={`px-4 py-3 font-semibold border-b-2 transition-all ${
                 activeTab === 'geral'
-                  ? 'border-blue-600 text-blue-600 dark:text-blue-500'
+                  ? 'border-primary text-primary dark:text-blue-500'
                   : 'border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
               }`}
             >
@@ -47,7 +47,7 @@ export function SettingsPage() {
               onClick={() => setActiveTab('notificacoes')}
               className={`px-4 py-3 font-semibold border-b-2 transition-all ${
                 activeTab === 'notificacoes'
-                  ? 'border-blue-600 text-blue-600 dark:text-blue-500'
+                  ? 'border-primary text-primary dark:text-blue-500'
                   : 'border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
               }`}
             >
@@ -57,7 +57,7 @@ export function SettingsPage() {
               onClick={() => setActiveTab('seguranca')}
               className={`px-4 py-3 font-semibold border-b-2 transition-all ${
                 activeTab === 'seguranca'
-                  ? 'border-blue-600 text-blue-600 dark:text-blue-500'
+                  ? 'border-primary text-primary dark:text-blue-500'
                   : 'border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
               }`}
             >
@@ -77,7 +77,7 @@ export function SettingsPage() {
                   </div>
                   <button
                     onClick={handleThemeToggle}
-                    className="relative inline-flex items-center w-14 h-8 rounded-full bg-blue-200 dark:bg-blue-700 transition-colors hover:bg-blue-300 dark:hover:bg-blue-600 cursor-pointer"
+                    className="relative inline-flex items-center w-14 h-8 rounded-full bg-blue-200 dark:bg-blue-700 transition-colors hover:bg-blue-300 dark:hover:bg-primary cursor-pointer"
                   >
                     <span className={`inline-block w-6 h-6 transform rounded-full bg-white shadow-lg transition-transform ${theme === 'dark' ? 'translate-x-7' : 'translate-x-1'}`} />
                   </button>
@@ -94,7 +94,7 @@ export function SettingsPage() {
                     <h3 className="text-lg font-bold text-slate-900 dark:text-white">Idioma</h3>
                     <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">Selecione seu idioma preferido</p>
                   </div>
-                  <select className="px-4 py-2 rounded-xl border-2 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white font-medium focus:ring-2 focus:ring-blue-600/50 transition-all">
+                  <select className="px-4 py-2 rounded-xl border-2 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white font-medium focus:ring-2 focus:ring-primary/50 transition-all">
                     <option>Português (BR)</option>
                     <option>English</option>
                     <option>Español</option>
@@ -109,7 +109,7 @@ export function SettingsPage() {
                     <h3 className="text-lg font-bold text-slate-900 dark:text-white">Fuso Horário</h3>
                     <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">Configure seu fuso horário</p>
                   </div>
-                  <select className="px-4 py-2 rounded-xl border-2 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white font-medium focus:ring-2 focus:ring-blue-600/50 transition-all">
+                  <select className="px-4 py-2 rounded-xl border-2 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white font-medium focus:ring-2 focus:ring-primary/50 transition-all">
                     <option>America/Sao_Paulo (UTC-3)</option>
                     <option>America/Manaus (UTC-4)</option>
                     <option>America/Anchorage (UTC-9)</option>
@@ -167,19 +167,19 @@ export function SettingsPage() {
                   <input 
                     type="password" 
                     placeholder="Senha atual" 
-                    className="w-full px-4 py-2 rounded-xl border-2 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder-slate-500 focus:ring-2 focus:ring-blue-600/50 transition-all"
+                    className="w-full px-4 py-2 rounded-xl border-2 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder-slate-500 focus:ring-2 focus:ring-primary/50 transition-all"
                   />
                   <input 
                     type="password" 
                     placeholder="Nova senha" 
-                    className="w-full px-4 py-2 rounded-xl border-2 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder-slate-500 focus:ring-2 focus:ring-blue-600/50 transition-all"
+                    className="w-full px-4 py-2 rounded-xl border-2 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder-slate-500 focus:ring-2 focus:ring-primary/50 transition-all"
                   />
                   <input 
                     type="password" 
                     placeholder="Confirmar nova senha" 
-                    className="w-full px-4 py-2 rounded-xl border-2 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder-slate-500 focus:ring-2 focus:ring-blue-600/50 transition-all"
+                    className="w-full px-4 py-2 rounded-xl border-2 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder-slate-500 focus:ring-2 focus:ring-primary/50 transition-all"
                   />
-                  <button className="w-full px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-all">
+                  <button className="w-full px-4 py-2.5 bg-primary hover:bg-blue-700 text-white font-bold rounded-xl transition-all">
                     Atualizar Senha
                   </button>
                 </div>

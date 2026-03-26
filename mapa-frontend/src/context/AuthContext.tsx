@@ -1,46 +1,84 @@
-import { createContext, useContext, useState, type ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
+import { supabase } from '../lib/supabase';
+import type { Session } from '@supabase/supabase-js';
 
-interface AuthUser {
-  id: number;
+interface Profile {
+  id: string;
   email: string;
   role: 'admin' | 'gestor';
-  empresa_id: number | null;
+  empresa_id: string | null;
 }
 
 interface AuthContextValue {
-  user: AuthUser | null;
-  token: string | null;
-  login: (user: AuthUser, token: string) => void;
-  logout: () => void;
+  user: Profile | null;
+  session: Session | null;
+  loading: boolean;
+  login: (email: string, password: string) => Promise<void>;
+  logout: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<AuthUser | null>(() => {
-    const stored = localStorage.getItem('mapa_user');
-    return stored ? JSON.parse(stored) : null;
-  });
-  const [token, setToken] = useState<string | null>(() =>
-    localStorage.getItem('mapa_token')
-  );
+  const [user, setUser] = useState<Profile | null>(null);
+  const [session, setSession] = useState<Session | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  const login = (user: AuthUser, token: string) => {
-    setUser(user);
-    setToken(token);
-    localStorage.setItem('mapa_user', JSON.stringify(user));
-    localStorage.setItem('mapa_token', token);
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      console.log('getSession result:', session?.user?.email ?? 'no session');
+      setSession(session);
+      if (session?.user) {
+        const profile: Profile = {
+          id: session.user.id,
+          email: session.user.email || '',
+          role: (session.user.user_metadata?.role as 'admin' | 'gestor') || 'admin',
+          empresa_id: session.user.user_metadata?.empresa_id || null,
+        };
+        console.log('Setting user from session:', profile);
+        setUser(profile);
+      }
+      setLoading(false);
+    });
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (_event, session) => {
+        console.log('onAuthStateChange:', _event, session?.user?.email);
+        setSession(session);
+        if (session?.user) {
+          const profile: Profile = {
+            id: session.user.id,
+            email: session.user.email || '',
+            role: (session.user.user_metadata?.role as 'admin' | 'gestor') || 'admin',
+            empresa_id: session.user.user_metadata?.empresa_id || null,
+          };
+          console.log('Setting user from auth change:', profile);
+          setUser(profile);
+        } else {
+          setUser(null);
+        }
+        setLoading(false);
+      }
+    );
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const login = async (email: string, password: string) => {
+    console.log('Attempting login for:', email);
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+    console.log('Login result:', { data: data?.user?.email, error: error?.message });
+    if (error) throw error;
   };
 
-  const logout = () => {
+  const logout = async () => {
+    await supabase.auth.signOut();
     setUser(null);
-    setToken(null);
-    localStorage.removeItem('mapa_user');
-    localStorage.removeItem('mapa_token');
+    setSession(null);
   };
 
   return (
-    <AuthContext.Provider value={{ user, token, login, logout }}>
+    <AuthContext.Provider value={{ user, session, loading, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

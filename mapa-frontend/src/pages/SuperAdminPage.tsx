@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { Sidebar } from '../components/Sidebar';
 import { NewClientPage } from './NewClientPage';
-import api from '../lib/axios';
+import { supabase } from '../lib/supabase';
 
 interface Empresa {
   id: number;
@@ -31,8 +31,9 @@ export function SuperAdminPage() {
 
   const carregarEmpresas = async () => {
     try {
-      const res = await api.get('/empresas');
-      setEmpresas(res.data);
+      const { data, error } = await supabase.from('empresas').select('*');
+      if (error) throw error;
+      setEmpresas(data || []);
     } catch (err) {
       console.error('Erro ao carregar empresas:', err);
     } finally {
@@ -71,7 +72,7 @@ export function SuperAdminPage() {
           </div>
           <div className="flex items-center gap-4">
             <div className="relative hidden lg:block">
-              <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xl">search</span>
+              <span className="material-symbols-rounded absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xl">search</span>
               <input 
                 className="pl-10 pr-4 py-2 bg-blue-50 dark:bg-blue-950/30 border-2 border-blue-200 dark:border-blue-800/50 rounded-lg text-sm w-64 focus:ring-2 focus:ring-blue-600/50 focus:border-blue-400 dark:focus:border-blue-600 transition-all text-slate-900 dark:text-white" 
                 placeholder="Buscar empresas ou alertas..." 
@@ -79,13 +80,13 @@ export function SuperAdminPage() {
               />
             </div>
             <button className="w-10 h-10 flex items-center justify-center rounded-lg bg-yellow-100 dark:bg-yellow-950/40 text-yellow-600 dark:text-yellow-400 hover:bg-yellow-200 dark:hover:bg-yellow-900/60 transition-colors">
-              <span className="material-symbols-outlined">notifications</span>
+              <span className="material-symbols-rounded">notifications</span>
             </button>
             <button 
               onClick={() => setShowNovoClienteModal(true)}
-              className="bg-linear-to-r from-blue-600 to-blue-700 text-white px-6 py-2.5 rounded-xl font-bold text-sm shadow-lg shadow-blue-600/30 hover:shadow-xl hover:shadow-blue-600/40 hover:to-blue-800 transition-all flex items-center gap-2"
+              className="bg-linear-to-r from-primary to-primary-dark text-white px-6 py-2.5 rounded-xl font-bold text-sm shadow-lg shadow-primary/30 hover:shadow-xl hover:shadow-primary/40 hover:to-blue-800 transition-all flex items-center gap-2"
             >
-              <span className="material-symbols-outlined">add</span>
+              <span className="material-symbols-rounded">add</span>
               Novo Cliente
             </button>
           </div>
@@ -97,8 +98,8 @@ export function SuperAdminPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 flex flex-col justify-between hover:shadow-md transition-shadow">
               <div className="flex items-center justify-between mb-4">
-                <span className="p-2 bg-blue-50 dark:bg-blue-900/20 text-blue-600 rounded-lg material-symbols-outlined">business</span>
-                <span className="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded">+5%</span>
+                <span className="p-2 bg-blue-50 dark:bg-blue-900/20 text-primary rounded-lg material-symbols-rounded">business</span>
+                <span className="text-xs font-bold text-primary bg-blue-50 px-2 py-1 rounded">+5%</span>
               </div>
               <p className="text-slate-500 text-sm font-medium">Total de Empresas</p>
               <h3 className="text-3xl font-black text-slate-900 dark:text-white mt-1">{empresas.length}</h3>
@@ -106,7 +107,7 @@ export function SuperAdminPage() {
 
             <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 flex flex-col justify-between hover:shadow-md transition-shadow">
               <div className="flex items-center justify-between mb-4">
-                <span className="p-2 bg-purple-50 dark:bg-purple-900/20 text-purple-600 rounded-lg material-symbols-outlined">person_search</span>
+                <span className="p-2 bg-purple-50 dark:bg-purple-900/20 text-purple-600 rounded-lg material-symbols-rounded">person_search</span>
                 <span className="text-xs font-bold text-purple-600 bg-purple-50 px-2 py-1 rounded">+12%</span>
               </div>
               <p className="text-slate-500 text-sm font-medium">Funcionários Mapeados</p>
@@ -115,7 +116,7 @@ export function SuperAdminPage() {
 
             <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 border-l-4 border-l-red-500 flex flex-col justify-between hover:shadow-md transition-shadow">
               <div className="flex items-center justify-between mb-4">
-                <span className="p-2 bg-red-50 dark:bg-red-900/20 text-red-600 rounded-lg material-symbols-outlined">warning</span>
+                <span className="p-2 bg-red-50 dark:bg-red-900/20 text-red-600 rounded-lg material-symbols-rounded">warning</span>
                 <span className="text-xs font-bold text-red-600 bg-red-50 px-2 py-1 rounded">-2%</span>
               </div>
               <p className="text-slate-500 text-sm font-medium">Alertas Críticos</p>
@@ -124,7 +125,7 @@ export function SuperAdminPage() {
 
             <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 flex flex-col justify-between hover:shadow-md transition-shadow">
               <div className="flex items-center justify-between mb-4">
-                <span className="p-2 bg-green-50 dark:bg-green-900/20 text-green-600 rounded-lg material-symbols-outlined">trending_up</span>
+                <span className="p-2 bg-green-50 dark:bg-green-900/20 text-green-600 rounded-lg material-symbols-rounded">trending_up</span>
                 <span className="text-xs font-bold text-green-600 bg-green-50 px-2 py-1 rounded">+8%</span>
               </div>
               <p className="text-slate-500 text-sm font-medium">Faturamento Mensal</p>
@@ -140,11 +141,11 @@ export function SuperAdminPage() {
               <h4 className="text-xl font-bold text-slate-900 dark:text-white">Gestão de Clientes</h4>
               <div className="flex items-center gap-2">
                 <button className="px-4 py-2.5 bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 rounded-xl text-sm font-semibold flex items-center gap-2 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 hover:border-blue-300 dark:hover:border-blue-600 transition-all">
-                  <span className="material-symbols-outlined text-lg">filter_list</span>
+                  <span className="material-symbols-rounded text-lg">filter_list</span>
                   Filtrar Risco
                 </button>
                 <button className="px-4 py-2.5 bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 rounded-xl text-sm font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 hover:border-blue-300 dark:hover:border-blue-600 transition-all flex items-center gap-2">
-                  <span className="material-symbols-outlined">download</span>
+                  <span className="material-symbols-rounded">download</span>
                   Exportar
                 </button>
               </div>
@@ -170,7 +171,7 @@ export function SuperAdminPage() {
                         <tr key={empresa.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors">
                           <td className="px-6 py-4">
                             <div className="flex items-center gap-3">
-                              <div className="w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center font-bold text-blue-600">
+                              <div className="w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center font-bold text-primary">
                                 {empresa.nome?.charAt(0).toUpperCase()}
                               </div>
                               <div>
@@ -193,7 +194,7 @@ export function SuperAdminPage() {
                           <td className="px-6 py-4 text-right">
                             <button 
                               onClick={() => acessarDashboard(empresa.id)}
-                              className="text-blue-600 font-bold text-sm hover:underline transition-colors"
+                              className="text-primary font-bold text-sm hover:underline transition-colors"
                             >
                               Acessar Dashboard
                             </button>
@@ -205,11 +206,11 @@ export function SuperAdminPage() {
                   <div className="px-6 py-4 bg-slate-50 dark:bg-slate-800/50 flex items-center justify-between border-t border-slate-100 dark:border-slate-800">
                     <p className="text-xs text-slate-500 font-medium">Mostrando {empresas.length} de {empresas.length} empresas</p>
                     <div className="flex gap-2">
-                      <button className="p-1 rounded bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-400 hover:text-blue-600 transition-colors">
-                        <span className="material-symbols-outlined">chevron_left</span>
+                      <button className="p-1 rounded bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-400 hover:text-primary transition-colors">
+                        <span className="material-symbols-rounded">chevron_left</span>
                       </button>
-                      <button className="p-1 rounded bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-400 hover:text-blue-600 transition-colors">
-                        <span className="material-symbols-outlined">chevron_right</span>
+                      <button className="p-1 rounded bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-400 hover:text-primary transition-colors">
+                        <span className="material-symbols-rounded">chevron_right</span>
                       </button>
                     </div>
                   </div>
@@ -272,7 +273,7 @@ export function SuperAdminPage() {
                   <div className="space-y-2">
                     <div className="flex justify-between text-sm font-medium">
                       <span>Significado do Trabalho</span>
-                      <span className="text-blue-600 font-bold">55%</span>
+                      <span className="text-primary font-bold">55%</span>
                     </div>
                     <div className="w-full bg-slate-100 dark:bg-slate-800 h-2 rounded-full overflow-hidden">
                       <div className="bg-blue-600 h-full w-[55%]" />
@@ -283,7 +284,7 @@ export function SuperAdminPage() {
                 {/* AI Insight Box */}
                 <div className="mt-8 p-4 rounded-xl bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800/50">
                   <div className="flex gap-3">
-                    <span className="material-symbols-outlined text-blue-600 shrink-0">lightbulb</span>
+                    <span className="material-symbols-rounded text-primary shrink-0">lightbulb</span>
                     <div>
                       <p className="text-sm font-bold text-slate-900 dark:text-white leading-tight">Insight de IA</p>
                       <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">O ritmo de trabalho aumentou 12% em empresas de logística no último trimestre.</p>
@@ -298,9 +299,9 @@ export function SuperAdminPage() {
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <h4 className="text-xl font-bold text-slate-900 dark:text-white">Alertas Recentes</h4>
-              <a href="#" className="text-sm font-bold text-blue-600 hover:text-blue-700 flex items-center gap-1">
+              <a href="#" className="text-sm font-bold text-primary hover:text-blue-700 flex items-center gap-1">
                 VER TODOS OS REGISTROS
-                <span className="material-symbols-outlined text-lg">arrow_outward</span>
+                <span className="material-symbols-rounded text-lg">arrow_outward</span>
               </a>
             </div>
 

@@ -93,7 +93,7 @@ export function SetoresPage() {
           </div>
           <div className="flex items-center gap-4">
             <div className="relative hidden lg:block">
-              <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xl">search</span>
+              <span className="material-symbols-rounded absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xl">search</span>
               <input 
                 className="pl-10 pr-4 py-2 bg-blue-50 dark:bg-blue-950/30 border-2 border-blue-200 dark:border-blue-800/50 rounded-lg text-sm w-64 focus:ring-2 focus:ring-blue-600/50 focus:border-blue-400 dark:focus:border-blue-600 transition-all text-slate-900 dark:text-white" 
                 placeholder="Buscar setores..." 
@@ -102,8 +102,8 @@ export function SetoresPage() {
                 type="text"
               />
             </div>
-            <button className="bg-linear-to-r from-blue-600 to-blue-700 text-white px-6 py-2.5 rounded-xl font-bold text-sm shadow-lg shadow-blue-600/30 hover:shadow-xl hover:shadow-blue-600/40 hover:to-blue-800 transition-all flex items-center gap-2">
-              <span className="material-symbols-outlined">add</span>
+            <button className="bg-linear-to-r from-primary to-primary-dark text-white px-6 py-2.5 rounded-xl font-bold text-sm shadow-lg shadow-primary/30 hover:shadow-xl hover:shadow-primary/40 hover:to-blue-800 transition-all flex items-center gap-2">
+              <span className="material-symbols-rounded">add</span>
               Novo Setor
             </button>
           </div>
@@ -115,7 +115,7 @@ export function SetoresPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 flex flex-col justify-between hover:shadow-md transition-shadow">
               <div className="flex items-center justify-between mb-4">
-                <span className="p-2 bg-blue-50 dark:bg-blue-900/20 text-blue-600 rounded-lg material-symbols-outlined">domain</span>
+                <span className="p-2 bg-blue-50 dark:bg-blue-900/20 text-blue-600 rounded-lg material-symbols-rounded">domain</span>
                 <span className="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded">+2</span>
               </div>
               <p className="text-slate-500 text-sm font-medium">Total de Setores</p>
@@ -124,7 +124,7 @@ export function SetoresPage() {
 
             <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 flex flex-col justify-between hover:shadow-md transition-shadow">
               <div className="flex items-center justify-between mb-4">
-                <span className="p-2 bg-red-50 dark:bg-red-900/20 text-red-600 rounded-lg material-symbols-outlined">warning</span>
+                <span className="p-2 bg-red-50 dark:bg-red-900/20 text-red-600 rounded-lg material-symbols-rounded">warning</span>
                 <span className="text-xs font-bold text-red-600 bg-red-50 px-2 py-1 rounded">1</span>
               </div>
               <p className="text-slate-500 text-sm font-medium">Setores Críticos</p>
@@ -133,7 +133,7 @@ export function SetoresPage() {
 
             <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 flex flex-col justify-between hover:shadow-md transition-shadow">
               <div className="flex items-center justify-between mb-4">
-                <span className="p-2 bg-green-50 dark:bg-green-900/20 text-green-600 rounded-lg material-symbols-outlined">check_circle</span>
+                <span className="p-2 bg-green-50 dark:bg-green-900/20 text-green-600 rounded-lg material-symbols-rounded">check_circle</span>
               </div>
               <p className="text-slate-500 text-sm font-medium">Coleta Completa</p>
               <h3 className="text-3xl font-black text-slate-900 dark:text-white mt-1">{SETORES_DATA.filter(s => s.coleta_status === 'Completa').length}</h3>
@@ -141,7 +141,7 @@ export function SetoresPage() {
 
             <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 flex flex-col justify-between hover:shadow-md transition-shadow">
               <div className="flex items-center justify-between mb-4">
-                <span className="p-2 bg-purple-50 dark:bg-purple-900/20 text-purple-600 rounded-lg material-symbols-outlined">people</span>
+                <span className="p-2 bg-purple-50 dark:bg-purple-900/20 text-purple-600 rounded-lg material-symbols-rounded">people</span>
               </div>
               <p className="text-slate-500 text-sm font-medium">Total de Funcionários</p>
               <h3 className="text-3xl font-black text-slate-900 dark:text-white mt-1">{SETORES_DATA.reduce((acc, s) => acc + s.funcionarios, 0)}</h3>
@@ -199,7 +199,7 @@ export function SetoresPage() {
 
             {filteredSetores.length === 0 && (
               <div className="px-8 py-12 text-center text-slate-500 dark:text-slate-400">
-                <span className="material-symbols-outlined text-4xl mb-3 block">search_off</span>
+                <span className="material-symbols-rounded text-4xl mb-3 block">search_off</span>
                 <p>Nenhum setor encontrado</p>
               </div>
             )}

@@ -85,8 +85,8 @@ export function ReportsPage() {
       <main className="flex-1 flex flex-col min-w-0 overflow-hidden">
         <header className="h-16 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-8 flex items-center justify-between shrink-0">
           <h1 className="text-xl font-bold">Relatórios</h1>
-          <button className="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-all flex items-center gap-2 shadow-lg shadow-blue-500/20">
-            <span className="material-symbols-outlined">download</span>
+          <button className="px-6 py-2.5 bg-primary hover:bg-primary-dark text-white font-semibold rounded-xl transition-all flex items-center gap-2 shadow-lg shadow-blue-500/20">
+            <span className="material-symbols-rounded">download</span>
             Exportar
           </button>
         </header>
@@ -131,7 +131,7 @@ export function ReportsPage() {
                 {/* Generate Report Button */}
                 <div className="flex items-end">
                   <button className="w-full px-4 py-2.5 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-xl transition-all flex items-center justify-center gap-2">
-                    <span className="material-symbols-outlined">add</span>
+                    <span className="material-symbols-rounded">add</span>
                     Gerar Novo
                   </button>
                 </div>
@@ -207,10 +207,10 @@ export function ReportsPage() {
                       </p>
                       <div className="flex gap-2">
                         <button className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-all">
-                          <span className="material-symbols-outlined text-lg">visibility</span>
+                          <span className="material-symbols-rounded text-lg">visibility</span>
                         </button>
                         <button className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-all">
-                          <span className="material-symbols-outlined text-lg">download</span>
+                          <span className="material-symbols-rounded text-lg">download</span>
                         </button>
                       </div>
                     </div>
@@ -228,7 +228,7 @@ export function ReportsPage() {
                     <p className="text-2xl font-bold">24</p>
                   </div>
                   <div className="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
-                    <span className="material-symbols-outlined text-blue-600 dark:text-blue-400">description</span>
+                    <span className="material-symbols-rounded text-blue-600 dark:text-blue-400">description</span>
                   </div>
                 </div>
               </div>
@@ -240,7 +240,7 @@ export function ReportsPage() {
                     <p className="text-2xl font-bold">6</p>
                   </div>
                   <div className="w-12 h-12 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
-                    <span className="material-symbols-outlined text-green-600 dark:text-green-400">trending_up</span>
+                    <span className="material-symbols-rounded text-green-600 dark:text-green-400">trending_up</span>
                   </div>
                 </div>
               </div>
@@ -252,7 +252,7 @@ export function ReportsPage() {
                     <p className="text-2xl font-bold">100%</p>
                   </div>
                   <div className="w-12 h-12 rounded-full bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center">
-                    <span className="material-symbols-outlined text-purple-600 dark:text-purple-400">check_circle</span>
+                    <span className="material-symbols-rounded text-purple-600 dark:text-purple-400">check_circle</span>
                   </div>
                 </div>
               </div>
@@ -264,7 +264,7 @@ export function ReportsPage() {
                     <p className="text-2xl font-bold">2</p>
                   </div>
                   <div className="w-12 h-12 rounded-full bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center">
-                    <span className="material-symbols-outlined text-orange-600 dark:text-orange-400">schedule</span>
+                    <span className="material-symbols-rounded text-orange-600 dark:text-orange-400">schedule</span>
                   </div>
                 </div>
               </div>

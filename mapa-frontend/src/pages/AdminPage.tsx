@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Shield, Plus } from 'lucide-react';
 import { Navbar } from '../components/Navbar';
 import { CompanyCard } from '../components/CompanyCard';
-import api from '../lib/axios';
+import { supabase } from '../lib/supabase';
 
 interface Empresa {
   id: number;
@@ -24,10 +24,11 @@ export function AdminPage() {
   const carregarEmpresas = async () => {
     setLoading(true);
     try {
-      const res = await api.get('/empresas');
-      setEmpresas(res.data);
+      const { data, error: err } = await supabase.from('empresas').select('*');
+      if (err) throw err;
+      setEmpresas(data || []);
     } catch (err: any) {
-      setError(err.response?.data?.error ?? 'Erro ao carregar empresas.');
+      setError(err.message ?? 'Erro ao carregar empresas.');
     } finally {
       setLoading(false);
     }
@@ -40,13 +41,14 @@ export function AdminPage() {
     setSaving(true);
     setFormError('');
     try {
-      await api.post('/empresas', { nome, cnpj });
+      const { error: err } = await supabase.from('empresas').insert({ nome, cnpj });
+      if (err) throw err;
       setNome('');
       setCnpj('');
       setShowForm(false);
       carregarEmpresas();
     } catch (err: any) {
-      setFormError(err.response?.data?.error ?? 'Erro ao criar empresa.');
+      setFormError(err.message ?? 'Erro ao criar empresa.');
     } finally {
       setSaving(false);
     }
@@ -120,7 +122,7 @@ export function AdminPage() {
 
               {formError && (
                 <div className="mt-4 p-3 rounded-lg bg-red-50 dark:bg-red-900/10 border border-red-100 dark:border-red-900/30 text-sm font-medium text-red-600 dark:text-red-400 flex items-center gap-2">
-                  <span className="material-symbols-outlined text-lg">error</span>
+                  <span className="material-symbols-rounded text-lg">error</span>
                   {formError}
                 </div>
               )}
@@ -149,7 +151,7 @@ export function AdminPage() {
           {/* Company list header */}
           <div className="mb-6 flex items-center justify-between">
             <h2 className="text-lg font-bold flex items-center gap-2">
-              <span className="material-symbols-outlined text-primary">corporate_fare</span>
+              <span className="material-symbols-rounded text-primary">corporate_fare</span>
               Empresas Clientes Cadastradas
             </h2>
             <div className="text-sm font-semibold text-slate-500 bg-white dark:bg-slate-900 px-3 py-1 rounded-full border border-slate-200 dark:border-slate-800 shadow-sm">
@@ -169,7 +171,7 @@ export function AdminPage() {
             </div>
           ) : empresas.length === 0 ? (
             <div className="text-center py-20 text-slate-400 bg-white dark:bg-slate-900 border border-dashed border-slate-300 dark:border-slate-700 rounded-xl mt-4">
-              <span className="material-symbols-outlined text-4xl text-slate-300 dark:text-slate-600 mb-2">business</span>
+              <span className="material-symbols-rounded text-4xl text-slate-300 dark:text-slate-600 mb-2">business</span>
               <p className="font-medium">Nenhuma empresa cadastrada ainda.</p>
               <p className="text-sm mt-1">Clique no botão "Nova Empresa" acima para começar.</p>
             </div>

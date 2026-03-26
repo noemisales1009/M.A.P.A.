@@ -108,7 +108,7 @@ export function NewClientPage({ onClose }: { onClose?: () => void }) {
                 onClick={handleCancelar}
                 className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 p-2"
               >
-                <span className="material-symbols-outlined text-2xl">close</span>
+                <span className="material-symbols-rounded text-2xl">close</span>
               </button>
             </div>
 
@@ -131,7 +131,7 @@ export function NewClientPage({ onClose }: { onClose?: () => void }) {
                     download={`qrcode-${setor.nome}.png`}
                     className="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-all text-sm flex items-center justify-center gap-2"
                   >
-                    <span className="material-symbols-outlined">download</span>
+                    <span className="material-symbols-rounded">download</span>
                     Baixar QR Code
                   </a>
                 </div>
@@ -149,7 +149,7 @@ export function NewClientPage({ onClose }: { onClose?: () => void }) {
                 onClick={() => window.print()}
                 className="flex-1 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-all flex items-center justify-center gap-2"
               >
-                <span className="material-symbols-outlined">print</span>
+                <span className="material-symbols-rounded">print</span>
                 Imprimir QR Codes
               </button>
             </div>
@@ -173,7 +173,7 @@ export function NewClientPage({ onClose }: { onClose?: () => void }) {
               onClick={handleCancelar}
               className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors p-1"
             >
-              <span className="material-symbols-outlined text-2xl">close</span>
+              <span className="material-symbols-rounded text-2xl">close</span>
             </button>
           </div>
         </div>
@@ -225,7 +225,7 @@ export function NewClientPage({ onClose }: { onClose?: () => void }) {
               <label className="text-slate-700 dark:text-slate-300 text-sm font-bold ml-1">Logotipo da Empresa</label>
               <div className="flex flex-col items-center gap-4 rounded-xl border-2 border-dashed border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-800/50 px-6 py-10 hover:bg-slate-50/50 dark:hover:bg-slate-800 hover:border-slate-400 dark:hover:border-slate-500 transition-all cursor-pointer group">
                 <div className="w-14 h-14 rounded-full bg-white dark:bg-slate-700 shadow-sm flex items-center justify-center border border-slate-100 dark:border-slate-600">
-                  <span className="material-symbols-outlined text-3xl text-slate-400 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                  <span className="material-symbols-rounded text-3xl text-slate-400 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                     cloud_upload
                   </span>
                 </div>
@@ -251,7 +251,7 @@ export function NewClientPage({ onClose }: { onClose?: () => void }) {
             <div className="flex flex-col gap-5 p-6 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
               <div className="flex flex-col gap-1">
                 <h3 className="text-slate-900 dark:text-white font-bold flex items-center gap-2">
-                  <span className="material-symbols-outlined text-blue-600 dark:text-blue-400 text-xl">account_tree</span>
+                  <span className="material-symbols-rounded text-blue-600 dark:text-blue-400 text-xl">account_tree</span>
                   Setores Iniciais *
                 </h3>
                 <p className="text-slate-500 dark:text-slate-400 text-xs">Adicione os departamentos para começar a organizar a estrutura.</p>
@@ -269,7 +269,7 @@ export function NewClientPage({ onClose }: { onClose?: () => void }) {
                   onClick={adicionarSetor}
                   className="bg-blue-600 hover:bg-blue-700 text-white w-11 h-11 rounded-lg flex items-center justify-center transition-all shadow-sm"
                 >
-                  <span className="material-symbols-outlined">add</span>
+                  <span className="material-symbols-rounded">add</span>
                 </button>
               </div>
               <div className="flex flex-wrap gap-2.5">
@@ -283,7 +283,7 @@ export function NewClientPage({ onClose }: { onClose?: () => void }) {
                       onClick={() => removerSetor(setor.id)}
                       className="flex items-center justify-center w-5 h-5 rounded-full hover:bg-red-50 dark:hover:bg-red-900/30 hover:text-red-500 dark:hover:text-red-400 transition-colors"
                     >
-                      <span className="material-symbols-outlined text-sm">close</span>
+                      <span className="material-symbols-rounded text-sm">close</span>
                     </button>
                   </div>
                 ))}
@@ -292,7 +292,7 @@ export function NewClientPage({ onClose }: { onClose?: () => void }) {
 
             {/* Info Box */}
             <div className="flex gap-4 items-start bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800 p-5 rounded-xl">
-              <span className="material-symbols-outlined text-blue-500 dark:text-blue-400 mt-0.5">info</span>
+              <span className="material-symbols-rounded text-blue-500 dark:text-blue-400 mt-0.5">info</span>
               <p className="text-blue-900 dark:text-blue-200/70 text-xs leading-relaxed font-medium">
                 Ao finalizar o cadastro, o sistema gerará automaticamente QR codes para cada setor que poderão ser impressos e distribuídos para os colaboradores responderem o questionário M.A.P.A.
               </p>
@@ -313,7 +313,7 @@ export function NewClientPage({ onClose }: { onClose?: () => void }) {
             className="px-12 h-14 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-all shadow-lg shadow-blue-500/30 flex items-center gap-3 text-base"
           >
             <span>Salvar Empresa</span>
-            <span className="material-symbols-outlined">check_circle</span>
+            <span className="material-symbols-rounded">check_circle</span>
           </button>
         </div>
       </div>

@@ -6,7 +6,7 @@ import type { LikertValue } from '../components/LikertOption';
 import { LIKERT_CHOICES, LikertOption } from '../components/LikertOption';
 import { CompletionScreen } from '../components/CompletionScreen';
 import { WelcomeScreen } from '../components/WelcomeScreen';
-import api from '../lib/axios';
+import { supabase } from '../lib/supabase';
 
 const QUESTIONS = [
   'Sente que tem de trabalhar muito rápido?',
@@ -40,14 +40,14 @@ export function SurveyPage() {
     if (currentIndex < QUESTIONS.length - 1) {
       setTimeout(() => setCurrentIndex(prev => prev + 1), 280);
     } else {
-      // Submit to API
+      // Submit to Supabase
       try {
-        await api.post('/survey/submit', {
+        await supabase.from('respostas_brutas').insert({
           setor_id: setorId,
-          respostas: newAnswers,
+          respostas_json: newAnswers,
         });
       } catch {
-        // Still show completion even if API fails
+        // Still show completion even if submission fails
       }
       setState('COMPLETED');
     }
