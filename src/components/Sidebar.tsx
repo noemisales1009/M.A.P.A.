@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import {
@@ -10,12 +11,30 @@ import {
   ShieldCheck,
   FileText,
   LogOut,
+  Menu,
+  X,
 } from 'lucide-react';
 
 export function Sidebar() {
   const navigate = useNavigate();
   const location = useLocation();
   const { user, logout } = useAuth();
+  const [isOpen, setIsOpen] = useState(false);
+
+  // Fecha o drawer automaticamente quando a rota muda (clicou num menu em mobile)
+  useEffect(() => {
+    setIsOpen(false);
+  }, [location.pathname]);
+
+  // Bloqueia scroll do body quando o drawer mobile está aberto
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => { document.body.style.overflow = ''; };
+  }, [isOpen]);
 
   const handleLogout = () => {
     logout();
@@ -39,78 +58,122 @@ export function Sidebar() {
   const empresaNome = user?.empresa_nome || null;
 
   return (
-    <aside className="w-72 flex flex-col sticky top-0 h-screen" style={{ backgroundColor: '#2D5A5A' }}>
-      {/* Logo + Empresa */}
-      <div className="p-6 flex flex-col gap-4 border-b border-white/10">
-        <div className="flex items-center gap-3">
-          <img src="/logo-mapa.png" alt="M.A.P.A." className="w-11 h-11 rounded-xl object-cover" />
-          <div>
-            <h1 className="font-extrabold text-lg leading-tight text-white tracking-tight">M.A.P.A.</h1>
-            <p className="text-[10px] text-white/50 uppercase tracking-widest font-bold">Saúde Mental Ocupacional</p>
-          </div>
-        </div>
-        {empresaNome && (
-          <div className="px-3 py-2 rounded-lg bg-white/10 border border-white/5">
-            <p className="text-[10px] text-white/40 uppercase tracking-widest font-bold">Empresa</p>
-            <p className="text-sm font-bold text-white truncate">{empresaNome}</p>
-          </div>
-        )}
-      </div>
+    <>
+      {/* Botão hamburguer — visível só em mobile e só quando o drawer está fechado */}
+      {!isOpen && (
+        <button
+          type="button"
+          onClick={() => setIsOpen(true)}
+          className="md:hidden fixed top-4 left-4 z-40 w-11 h-11 rounded-xl shadow-lg flex items-center justify-center text-white"
+          style={{ backgroundColor: '#2D5A5A' }}
+          aria-label="Abrir menu"
+        >
+          <Menu size={22} />
+        </button>
+      )}
 
-      {/* Navigation */}
-      <nav className="flex-1 px-3 py-6 space-y-1 overflow-y-auto">
-        {menuItems.map((item) => {
-          const Icon = item.icon;
-          return (
-            <a
-              key={item.path}
-              onClick={() => navigate(item.path)}
-              className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all cursor-pointer ${
-                isActive(item.path)
-                  ? 'text-white shadow-lg'
-                  : 'text-white/60 hover:text-white hover:bg-white/10'
-              }`}
-              style={isActive(item.path) ? { backgroundColor: '#009B9B' } : {}}
+      {/* Overlay escuro — só em mobile, quando o drawer está aberto */}
+      {isOpen && (
+        <div
+          className="md:hidden fixed inset-0 z-40 bg-black/60 backdrop-blur-sm"
+          onClick={() => setIsOpen(false)}
+          aria-hidden="true"
+        />
+      )}
+
+      {/* Sidebar
+          - Mobile: fixed + slide via translate-x, escondida por padrão
+          - Desktop (md+): sticky no fluxo normal, sempre visível */}
+      <aside
+        className={`
+          fixed md:sticky top-0 left-0 z-50
+          h-screen w-72 flex flex-col shrink-0
+          transform transition-transform duration-300 ease-in-out
+          ${isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
+        `}
+        style={{ backgroundColor: '#2D5A5A' }}
+      >
+        {/* Logo + Empresa */}
+        <div className="p-6 flex flex-col gap-4 border-b border-white/10">
+          <div className="flex items-center gap-3">
+            <img src="/logo-mapa.png" alt="M.A.P.A." className="w-11 h-11 rounded-xl object-cover" />
+            <div className="flex-1 min-w-0">
+              <h1 className="font-extrabold text-lg leading-tight text-white tracking-tight">M.A.P.A.</h1>
+              <p className="text-[10px] text-white/50 uppercase tracking-widest font-bold">Saúde Mental Ocupacional</p>
+            </div>
+            {/* Botão fechar — só em mobile, dentro do drawer */}
+            <button
+              type="button"
+              onClick={() => setIsOpen(false)}
+              className="md:hidden w-9 h-9 rounded-lg flex items-center justify-center text-white/70 hover:text-white hover:bg-white/10 transition-colors"
+              aria-label="Fechar menu"
             >
-              <Icon size={20} strokeWidth={isActive(item.path) ? 2.5 : 2} />
-              <span className="font-semibold text-sm">{item.label}</span>
-            </a>
-          );
-        })}
-      </nav>
-
-      {/* Bottom Section */}
-      <div className="p-4 border-t border-white/10 space-y-3">
-        {/* Generate Report Button */}
-        <button
-          onClick={() => navigate('/reports')}
-          className="w-full px-4 py-3 rounded-xl text-white font-bold text-sm flex items-center justify-center gap-2 shadow-lg hover:shadow-xl transition-all"
-          style={{ backgroundColor: '#009B9B' }}
-        >
-          <FileText size={18} />
-          Gerar Relatório PGR
-        </button>
-
-        {/* User Card */}
-        <div className="flex items-center gap-3 p-3 rounded-xl bg-white/10">
-          <div className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold text-white" style={{ backgroundColor: '#009B9B' }}>
-            {displayName.charAt(0).toUpperCase()}
+              <X size={20} />
+            </button>
           </div>
-          <div className="flex-1 overflow-hidden">
-            <p className="text-sm font-bold text-white truncate">{displayName}</p>
-            <p className="text-[11px] text-white/50 truncate">{roleLabel}</p>
-          </div>
+          {empresaNome && (
+            <div className="px-3 py-2 rounded-lg bg-white/10 border border-white/5">
+              <p className="text-[10px] text-white/40 uppercase tracking-widest font-bold">Empresa</p>
+              <p className="text-sm font-bold text-white truncate">{empresaNome}</p>
+            </div>
+          )}
         </div>
 
-        {/* Logout Button */}
-        <button
-          onClick={handleLogout}
-          className="w-full px-4 py-2.5 rounded-xl border border-white/20 text-white/60 font-semibold text-sm hover:text-red-300 hover:border-red-400/30 hover:bg-red-500/10 transition-all flex items-center justify-center gap-2"
-        >
-          <LogOut size={18} />
-          Sair
-        </button>
-      </div>
-    </aside>
+        {/* Navigation */}
+        <nav className="flex-1 px-3 py-6 space-y-1 overflow-y-auto">
+          {menuItems.map((item) => {
+            const Icon = item.icon;
+            return (
+              <a
+                key={item.path}
+                onClick={() => navigate(item.path)}
+                className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all cursor-pointer ${
+                  isActive(item.path)
+                    ? 'text-white shadow-lg'
+                    : 'text-white/60 hover:text-white hover:bg-white/10'
+                }`}
+                style={isActive(item.path) ? { backgroundColor: '#009B9B' } : {}}
+              >
+                <Icon size={20} strokeWidth={isActive(item.path) ? 2.5 : 2} />
+                <span className="font-semibold text-sm">{item.label}</span>
+              </a>
+            );
+          })}
+        </nav>
+
+        {/* Bottom Section */}
+        <div className="p-4 border-t border-white/10 space-y-3">
+          {/* Generate Report Button */}
+          <button
+            onClick={() => navigate('/reports')}
+            className="w-full px-4 py-3 rounded-xl text-white font-bold text-sm flex items-center justify-center gap-2 shadow-lg hover:shadow-xl transition-all"
+            style={{ backgroundColor: '#009B9B' }}
+          >
+            <FileText size={18} />
+            Gerar Relatório PGR
+          </button>
+
+          {/* User Card */}
+          <div className="flex items-center gap-3 p-3 rounded-xl bg-white/10">
+            <div className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold text-white shrink-0" style={{ backgroundColor: '#009B9B' }}>
+              {displayName.charAt(0).toUpperCase()}
+            </div>
+            <div className="flex-1 overflow-hidden">
+              <p className="text-sm font-bold text-white truncate">{displayName}</p>
+              <p className="text-[11px] text-white/50 truncate">{roleLabel}</p>
+            </div>
+          </div>
+
+          {/* Logout Button */}
+          <button
+            onClick={handleLogout}
+            className="w-full px-4 py-2.5 rounded-xl border border-white/20 text-white/60 font-semibold text-sm hover:text-red-300 hover:border-red-400/30 hover:bg-red-500/10 transition-all flex items-center justify-center gap-2"
+          >
+            <LogOut size={18} />
+            Sair
+          </button>
+        </div>
+      </aside>
+    </>
   );
 }
