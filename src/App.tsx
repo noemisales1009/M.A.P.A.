@@ -84,7 +84,7 @@ function App() {
           <Route
             path="/financeiro"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute adminOnly>
                 <FinanceiroPage />
               </ProtectedRoute>
             }

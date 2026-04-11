@@ -46,9 +46,14 @@ export function Sidebar() {
     { label: 'Priorização', icon: AlertTriangle, path: '/dashboard' },
     { label: 'Setores', icon: Building2, path: '/setores' },
     { label: 'Relatórios', icon: FileBarChart, path: '/reports' },
-    { label: 'Financeiro', icon: Wallet, path: '/financeiro' },
     { label: 'Configurações', icon: Settings, path: '/settings' },
-    ...(user?.role === 'admin' ? [{ label: 'Super Admin', icon: ShieldCheck, path: '/super-admin' }] : []),
+    // Itens exclusivos do admin (aparecem no fim do menu)
+    ...(user?.role === 'admin'
+      ? [
+          { label: 'Super Admin', icon: ShieldCheck, path: '/super-admin' },
+          { label: 'Financeiro', icon: Wallet, path: '/financeiro' },
+        ]
+      : []),
   ];
 
   const isActive = (path: string) => location.pathname === path;
