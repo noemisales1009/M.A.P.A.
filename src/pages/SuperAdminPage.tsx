@@ -122,9 +122,57 @@ export function SuperAdminPage() {
     setQrEmpresa({ nome: empresaNome, setores: data });
   };
 
-  const gerarQRCodeUrl = (departmentId: string): string => {
+  const gerarQRCodeUrl = (departmentId: string, size = 200): string => {
     const url = `${window.location.origin}/survey?setor=${departmentId}`;
-    return `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(url)}`;
+    return `https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&data=${encodeURIComponent(url)}`;
+  };
+
+  const imprimirQRCodes = () => {
+    if (!qrEmpresa) return;
+    const surveyBase = window.location.origin;
+    const html = `<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>QR Codes - ${qrEmpresa.nome}</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; color: #1e293b; padding: 40px; }
+  .header { text-align: center; margin-bottom: 40px; border-bottom: 3px solid #2D5A5A; padding-bottom: 20px; }
+  .header h1 { font-size: 28px; color: #2D5A5A; margin-bottom: 4px; }
+  .header p { font-size: 14px; color: #64748b; }
+  .header .empresa { font-size: 20px; color: #009B9B; font-weight: bold; margin-top: 8px; }
+  .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px; }
+  .card { border: 2px solid #e2e8f0; border-radius: 16px; padding: 24px; text-align: center; page-break-inside: avoid; }
+  .card img { width: 180px; height: 180px; margin: 0 auto 16px; display: block; }
+  .card h3 { font-size: 18px; font-weight: bold; color: #2D5A5A; margin-bottom: 4px; }
+  .card .url { font-size: 9px; color: #94a3b8; word-break: break-all; margin-top: 8px; }
+  .card .instrucao { font-size: 11px; color: #64748b; margin-top: 12px; padding: 8px; background: #f8fafc; border-radius: 8px; }
+  .footer { text-align: center; margin-top: 40px; padding-top: 16px; border-top: 1px solid #e2e8f0; font-size: 11px; color: #94a3b8; }
+  @media print {
+    body { padding: 20px; }
+    .grid { gap: 20px; }
+    .card { border-width: 1px; }
+  }
+</style></head><body>
+  <div class="header">
+    <h1>M.A.P.A.</h1>
+    <p>Monitorização de Apoio e Prevenção Ativa</p>
+    <div class="empresa">${qrEmpresa.nome}</div>
+  </div>
+  <div class="grid">
+    ${qrEmpresa.setores.map(s => `
+    <div class="card">
+      <img src="${gerarQRCodeUrl(s.id, 300)}" alt="QR Code ${s.name}" />
+      <h3>${s.name}</h3>
+      <div class="instrucao">Escaneie o QR Code para responder o questionário de saúde mental ocupacional</div>
+      <div class="url">${surveyBase}/survey?setor=${s.id}</div>
+    </div>`).join('')}
+  </div>
+  <div class="footer">
+    Gerado em ${new Date().toLocaleDateString('pt-BR')} &bull; M.A.P.A. &mdash; Saúde Mental Ocupacional &bull; LM Consultoria
+  </div>
+<script>window.onload = function() { window.print(); }<\/script>
+</body></html>`;
+    const w = window.open('', '_blank');
+    if (w) { w.document.write(html); w.document.close(); }
   };
 
   const getRiskColor = (risco: string) => {
@@ -415,7 +463,7 @@ export function SuperAdminPage() {
                 Fechar
               </button>
               <button
-                onClick={() => window.print()}
+                onClick={imprimirQRCodes}
                 className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-all flex items-center gap-2 cursor-pointer"
               >
                 <span className="material-symbols-rounded text-sm">print</span>
